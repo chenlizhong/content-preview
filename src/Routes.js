@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -48,8 +48,8 @@ InsightsRoute.propTypes = {
  *      path - https://prod.foo.redhat.com:1337/insights/advisor/rules
  *      component - component to be rendered when a route has been chosen.
  */
-export const Routes = ({ childProps }) => {
-    const path = childProps.location.pathname;
+export const Routes = () => {
+    const path = useLocation().pathname;
 
     return (
         <Switch>
@@ -60,8 +60,4 @@ export const Routes = ({ childProps }) => {
             <Route render={() => some(paths, p => p === path) ? null : (<Redirect to={paths.samplepage} />)} />
         </Switch>
     );
-};
-
-Routes.propTypes = {
-    childProps: PropTypes.object
 };
