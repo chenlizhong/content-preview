@@ -41,6 +41,7 @@
     "@patternfly/react-table": "4.8.6",
     "@redhat-cloud-services/frontend-components": "2.1.2",
     "@redhat-cloud-services/frontend-components-utilities": "2.1.0",
+    "axios": "0.19.2",
     "classnames": "2.2.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -48,7 +49,8 @@
     "react-router-dom": "5.2.0",
     "redux": "4.0.5",
     "redux-logger": "3.0.6",
-    "redux-promise-middleware": "6.1.2"
+    "redux-promise-middleware": "6.1.2",
+    "seamless-immutable": "7.1.4"
   },
   "devDependencies": {
     "@babel/core": "7.10.4",
@@ -88,6 +90,6 @@
     "webpack-cli": "3.3.12"
   },
   "insights": {
-    "appname": "starter"
+    "appname": "content-preview"
   }
 }
