@@ -1,7 +1,5 @@
-/*global module*/
-
 const SECTION = 'insights';
-const APP_ID = 'starter';
+const APP_ID = 'content-preview';
 const FRONTEND_PORT = 8002;
 const routes = {};
 
