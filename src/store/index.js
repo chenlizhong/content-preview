@@ -1,5 +1,5 @@
 import ReducerRegistry from '@redhat-cloud-services/frontend-components-utilities/files/ReducerRegistry';
-import { getCPStore } from './AppReducer';
+import { getCPStore } from './Reducer';
 import promiseMiddleware from 'redux-promise-middleware';
 let registry;
 

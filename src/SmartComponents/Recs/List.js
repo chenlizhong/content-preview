@@ -7,16 +7,19 @@ import { Button } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import asyncComponent from '../../Utilities/asyncComponent';
 import { connect } from 'react-redux';
-import { fetchContent } from '../../store/AppActions';
+import { fetchContent } from '../../store/Actions';
 import { withRouter } from 'react-router-dom';
 
 const SampleComponent = asyncComponent(() => import('../../PresentationalComponents/SampleComponent/sample-component'));
 
-const List = ({ content, fetchContentStatus }) => {
+const List = ({ content, fetchContent, contentFetchStatus }) => {
 
-    useEffect(() => { fetchContent(); }, []);
+    useEffect(() => { fetchContent(); }, [fetchContent]);
 
-    console.error(content, fetchContentStatus);
+    useEffect(() => {
+        console.error(content, contentFetchStatus);
+    }, [content, contentFetchStatus]);
+
     return (
         <React.Fragment>
             <PageHeader>
@@ -41,13 +44,13 @@ const List = ({ content, fetchContentStatus }) => {
 
 List.propTypes = {
     fetchContent: PropTypes.func,
-    fetchContentStatus: PropTypes.string,
-    content: PropTypes.object
+    contentFetchStatus: PropTypes.string,
+    content: PropTypes.array
 };
 
 const mapStateToProps = ({ CPStore }) => ({
     content: CPStore.content,
-    fetchContentStatus: CPStore.fetchContentStatus
+    contentFetchStatus: CPStore.contentFetchStatus
 });
 
 const mapDispatchToProps = dispatch => ({

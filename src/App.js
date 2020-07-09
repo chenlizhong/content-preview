@@ -9,7 +9,6 @@ import { withRouter } from 'react-router-dom';
 
 class App extends Component {
     componentDidMount() { insights.chrome.init(); }
-    componentWillUnmount() { this.appNav(); }
     render() {
         return (<Routes childProps={this.props} />);
     }

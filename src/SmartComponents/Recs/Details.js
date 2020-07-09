@@ -1,20 +1,23 @@
 import { Main, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import React, { useEffect } from 'react';
-import { fetchDetailsContent, fetchPyData } from '../../store/AppActions';
+import { fetchContentDetails, fetchPyData } from '../../store/Actions';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const Details = ({ match, fetchDetailsContent, fetchPyData, details, contentDetailsFetchStatus, pyData, pyDataFetchStatus }) => {
+const Details = ({ match, fetchContentDetails, fetchPyData, details, contentDetailsFetchStatus, pyData, pyDataFetchStatus }) => {
 
     useEffect(() => {
         const detailName = { name: match.params.recDetail };
-        fetchDetailsContent(detailName);
+        fetchContentDetails(detailName);
         fetchPyData(detailName);
-    }, [fetchDetailsContent, fetchPyData, match.params.recDetail]);
+    }, [fetchContentDetails, fetchPyData, match.params.recDetail]);
 
-    console.error(details, contentDetailsFetchStatus, pyData, pyDataFetchStatus);
+    useEffect(() => {
+        console.error(details, contentDetailsFetchStatus, pyData, pyDataFetchStatus);
+    }, [contentDetailsFetchStatus, details, fetchContentDetails, fetchPyData, match.params.recDetail, pyData, pyDataFetchStatus]);
+
     return (
         <React.Fragment>
             <PageHeader>
@@ -32,11 +35,11 @@ Details.displayName = 'view-rec-details';
 
 Details.propTypes = {
     match: PropTypes.object,
-    fetchDetailsContent: PropTypes.func,
+    fetchContentDetails: PropTypes.func,
     fetchPyData: PropTypes.func,
     details: PropTypes.object,
     contentDetailsFetchStatus: PropTypes.string,
-    pyData: PropTypes.object,
+    pyData: PropTypes.array,
     pyDataFetchStatus: PropTypes.string
 };
 
@@ -48,8 +51,8 @@ const mapStateToProps = ({ CPStore }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchDetailsContent: (options) => dispatch(fetchDetailsContent(options)),
-    fetchPyData: (options) => dispatch(fetchPyData(options))
+    fetchContentDetails: options => dispatch(fetchContentDetails(options)),
+    fetchPyData: options => dispatch(fetchPyData(options))
 });
 
 export default withRouter(connect(

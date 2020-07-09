@@ -5,11 +5,11 @@ import Immutable from 'seamless-immutable';
 
 // eslint-disable-next-line new-cap
 const initialState = Immutable({
-    content: {},
+    content: [],
     contentFetchStatus: '',
     contentDetails: {},
     contentDetailsFetchStatus: '',
-    pyData: {},
+    pyData: [],
     pyDataFetchStatus: ''
 });
 
@@ -29,7 +29,7 @@ export const getCPStore = () => (state = initialState, action) => {
             return state.set('contentDetailsFetchStatus', 'pending');
         case `${ActionTypes.CONTENT_DETAILS_FETCH}_FULFILLED`:
             return Immutable.merge(state, {
-                contentDetails: action.payload,
+                contentDetails: action.payload[0],
                 contentDetailsFetchStatus: 'fulfilled'
             });
         case `${ActionTypes.CONTENT_DETAILS_FETCH}_REJECTED`:
