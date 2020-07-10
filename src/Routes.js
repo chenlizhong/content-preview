@@ -1,15 +1,11 @@
+import React, { Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-import React from 'react';
-import asyncComponent from './Utilities/asyncComponent';
 
-const RecList = asyncComponent(() => import(/* webpackChunkName: "RecList" */ './SmartComponents/Recs/List'));
-const RecDetails = asyncComponent(() => import(/* webpackChunkName: "RecDetails" */ './SmartComponents/Recs/Details'));
-const paths = {
-    reclist: '/',
-    recdetails: '/:recDetail'
-};
+const RecList = lazy(() => import(/* webpackChunkName: "RecList" */ './SmartComponents/Recs/List'));
+const RecDetails = lazy(() => import(/* webpackChunkName: "RecDetails" */ './SmartComponents/Recs/Details'));
+const paths = { reclist: '/', recdetails: '/:recDetail/' };
 
 const InsightsRoute = ({ component: Component, rootClass, ...rest }) => {
     const root = document.getElementById('root');
@@ -26,10 +22,9 @@ InsightsRoute.propTypes = {
 };
 
 export const Routes = () => <Switch>
-    <InsightsRoute key='RecList' exact path={paths.reclist} component={RecList} rootClass='Insights' />
-    <InsightsRoute key='RecDetail' exact path={paths.recdetails} component={RecDetails} rootClass='Insights' />
-
-    { /* Finally, catch all unmatched routes */}
+    <InsightsRoute key='RecList' exact path={paths.reclist} rootClass='Insights'
+        component={() => <Suspense fallback={<span>wait</span>}> <RecList /> </Suspense>} />
+    <InsightsRoute key='RecDetail' exact path={paths.recdetails} rootClass='Insights'
+        component={() => <Suspense fallback={<span>wait</span>}> <RecDetails /> </Suspense>} />
     <Redirect path='*' to={paths.reclist} push />
 </Switch>;
-
