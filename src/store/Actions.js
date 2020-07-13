@@ -11,9 +11,21 @@ export const fetchContent = (options) => ({
     type: ActionTypes.CONTENT_FETCH,
     payload: fetchData(ActionTypes.CONTENT_FETCH_URL, {}, options)
 });
+export const fetchContentHits = (options) => ({
+    type: ActionTypes.CONTENT_HITS_FETCH,
+    payload: fetchData(ActionTypes.CONTENT_HITS_FETCH_URL, {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    }, options)
+});
 export const fetchContentDetails = (options) => ({
     type: ActionTypes.CONTENT_DETAILS_FETCH,
     payload: fetchData(`${ActionTypes.CONTENT_DETAILS_FETCH_URL}${options.name}`, {})
+});
+export const fetchContentDetailsHits = (options) => ({
+    type: ActionTypes.CONTENT_DETAILS_HITS_FETCH,
+    payload: fetchData(`${ActionTypes.CONTENT_DETAILS_HITS_FETCH_URL}${options.name}`, {})
 });
 export const fetchPyData = (options) => ({
     type: ActionTypes.PY_DATA_FETCH,

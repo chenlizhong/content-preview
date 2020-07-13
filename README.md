@@ -11,6 +11,8 @@ Note: You will need to set up the Insights environment if you want to develop wi
 
 ## Build app
 
+**If you see security cert issues in the network tab (that breaks app rendering horribly), be sure to add a server exception for `10.72.32.104:8090/`**
+
 1. ```npm install```
 
 2. ```npm run start```

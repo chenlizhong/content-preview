@@ -1,14 +1,18 @@
 /* eslint camelcase: 0 */
 import * as ActionTypes from '../AppConstants';
-
+import { hits } from '../AppConstants';
 import Immutable from 'seamless-immutable';
 
 // eslint-disable-next-line new-cap
 const initialState = Immutable({
     content: [],
     contentFetchStatus: '',
+    contentHits: hits,
+    contentHitsFetchStatus: '',
     contentDetails: {},
     contentDetailsFetchStatus: '',
+    contentDetailsHits: {},
+    contentDetailsHitsFetchStatus: '',
     pyData: [],
     pyDataFetchStatus: ''
 });
@@ -25,6 +29,16 @@ export const getCPStore = () => (state = initialState, action) => {
         case `${ActionTypes.CONTENT_FETCH}_REJECTED`:
             return state.set('contentFetchStatus', 'rejected');
 
+        case `${ActionTypes.CONTENT_HITS_FETCH}_PENDING`:
+            return state.set('contentHitsFetchStatus', 'pending');
+        case `${ActionTypes.CONTENT_HITS_FETCH}_FULFILLED`:
+            return Immutable.merge(state, {
+                contentHits: action.payload,
+                contentHitsFetchStatus: 'fulfilled'
+            });
+        case `${ActionTypes.CONTENT_HITS_FETCH}_REJECTED`:
+            return state.set('contentHitsFetchStatus', 'rejected');
+
         case `${ActionTypes.CONTENT_DETAILS_FETCH}_PENDING`:
             return state.set('contentDetailsFetchStatus', 'pending');
         case `${ActionTypes.CONTENT_DETAILS_FETCH}_FULFILLED`:
@@ -34,6 +48,16 @@ export const getCPStore = () => (state = initialState, action) => {
             });
         case `${ActionTypes.CONTENT_DETAILS_FETCH}_REJECTED`:
             return state.set('contentDetailsFetchStatus', 'rejected');
+
+        case `${ActionTypes.CONTENT_DETAILS_HITS_FETCH}_PENDING`:
+            return state.set('contentDetailsHitsFetchStatus', 'pending');
+        case `${ActionTypes.CONTENT_DETAILS_HITS_FETCH}_FULFILLED`:
+            return Immutable.merge(state, {
+                contentDetailsHits: action.payload,
+                contentDetailsHitsFetchStatus: 'fulfilled'
+            });
+        case `${ActionTypes.CONTENT_DETAILS_HITS_FETCH}_REJECTED`:
+            return state.set('contentDetailsHitsFetchStatus', 'rejected');
 
         case `${ActionTypes.PY_DATA_FETCH}_PENDING`:
             return state.set('pyDataFetchStatus', 'pending');
