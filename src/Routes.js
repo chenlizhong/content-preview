@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
+import Loading from './PresentationalComponents/Loading/Loading';
 import PropTypes from 'prop-types';
 
-const RecList = lazy(() => import(/* webpackChunkName: "RecList" */ './SmartComponents/Recs/List'));
-const RecDetails = lazy(() => import(/* webpackChunkName: "RecDetails" */ './SmartComponents/Recs/Details'));
-const paths = { reclist: '/', recdetails: '/:recDetail/' };
+const List = lazy(() => import(/* webpackChunkName: "List" */ './SmartComponents/Recs/List'));
+const Details = lazy(() => import(/* webpackChunkName: "Details" */ './SmartComponents/Recs/Details'));
+const paths = { list: '/', details: '/:recDetail/' };
 
 const InsightsRoute = ({ component: Component, rootClass, ...rest }) => {
     const root = document.getElementById('root');
@@ -22,9 +22,9 @@ InsightsRoute.propTypes = {
 };
 
 export const Routes = () => <Switch>
-    <InsightsRoute key='RecList' exact path={paths.reclist} rootClass='Insights'
-        component={() => <Suspense fallback={<span>wait</span>}> <RecList /> </Suspense>} />
-    <InsightsRoute key='RecDetail' exact path={paths.recdetails} rootClass='Insights'
-        component={() => <Suspense fallback={<span>wait</span>}> <RecDetails /> </Suspense>} />
-    <Redirect path='*' to={paths.reclist} push />
+    <InsightsRoute key='List' exact path={paths.list} rootClass='Insights'
+        component={() => <Suspense fallback={<Loading />}> <List /> </Suspense>} />
+    <InsightsRoute key='Details' exact path={paths.details} rootClass='Insights'
+        component={() => <Suspense fallback={<Loading />}> <Details /> </Suspense>} />
+    <Redirect path='*' to={paths.list} push />
 </Switch>;
