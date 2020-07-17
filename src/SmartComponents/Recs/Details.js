@@ -103,7 +103,9 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                     <Card>
                         <CardBody>
                             <ExpandableSection toggleText={details.name} onToggle={() => setExpanded(!expanded)} isExpanded={expanded}>
-                                <p>{`Publish Date: ${details.publish_date} | `}{details.node_id ? <a href={detailHref}>{detailHref}</a> : <Label variant='outline' color='gray'>No node_id present</Label>}</p>
+                                <p>{`Publish Date: ${details.publish_date} | `}
+                                    {details.node_id ? <a href={detailHref}>{detailHref}</a> :
+                                        <Label variant='outline' color='gray'>No node_id present</Label>}</p>
                                 {details.reboot_required && <Label variant='outline' color='gray'>Reboot required</Label>}
                                 <Label variant='outline' color='gray'>{details.category}</Label>
                                 {details.severity && <Label variant='outline' color={severityLabelColor(details.severity)}>{details.severity}</Label>}
