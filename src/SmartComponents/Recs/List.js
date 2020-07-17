@@ -1,25 +1,29 @@
 /* eslint-disable max-len */
 import './_List.scss';
+
 import { Main, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import React, { Suspense, lazy, useEffect } from 'react';
+import { fetchContent, fetchContentHits } from '../../store/Actions';
+
+import { Alert } from '@patternfly/react-core/dist/esm/components/Alert/Alert';
+import HostSelector from '../../PresentationalComponents/HostSelector/HostSelector';
 import Loading from '../../PresentationalComponents/Loading/Loading';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchContent, fetchContentHits } from '../../store/Actions';
 import { withRouter } from 'react-router-dom';
-import { Alert } from '@patternfly/react-core/dist/esm/components/Alert/Alert';
 
 const CotentTable = lazy(() => import('../../PresentationalComponents/ContentTable/ContentTable'));
 
 const List = ({ content, fetchContent, contentFetchStatus, contentHits, fetchContentHits, contentHitsFetchStatus }) => {
     const rejected = (fetchingWhat) => `There was an issue fetching ${fetchingWhat}, likely you're using chrome and the network tab will show '(failed)net::ERR_CERT_INVALID' 🦹‍♀️🤯😬`;
     useEffect(() => {
-        // fetchContentHits();
+        fetchContentHits();
         fetchContent();
     }, [fetchContent, fetchContentHits]);
     return <React.Fragment>
         <PageHeader>
             <PageHeaderTitle title='Content Preview App' />
+            <HostSelector />
         </PageHeader>
         <Main>
             <Suspense fallback={<Loading />}>

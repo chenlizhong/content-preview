@@ -14,9 +14,7 @@ export const fetchContent = (options) => ({
 export const fetchContentHits = (options) => ({
     type: ActionTypes.CONTENT_HITS_FETCH,
     payload: fetchData(ActionTypes.CONTENT_HITS_FETCH_URL, {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        Accept: 'application/json'
     }, options)
 });
 export const fetchContentDetails = (options) => ({
@@ -25,9 +23,15 @@ export const fetchContentDetails = (options) => ({
 });
 export const fetchContentDetailsHits = (options) => ({
     type: ActionTypes.CONTENT_DETAILS_HITS_FETCH,
-    payload: fetchData(`${ActionTypes.CONTENT_DETAILS_HITS_FETCH_URL}${options.name}`, {})
+    payload: fetchData(`${ActionTypes.CONTENT_DETAILS_HITS_FETCH_URL}${options.name}`, {
+        Accept: 'application/json'
+    })
 });
 export const fetchPyData = (options) => ({
     type: ActionTypes.PY_DATA_FETCH,
     payload: fetchData(`${ActionTypes.PY_DATA_FETCH_URL}${options.name}`, {})
+});
+export const setBaseUrl = (url) => ({
+    type: ActionTypes.URL_SET,
+    payload: url
 });

@@ -1,13 +1,17 @@
+/* eslint-disable camelcase */
 import './_ContentTable.scss';
+
 import { Link, withRouter } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { SortByDirection, Table, TableBody, TableHeader, sortable, TableVariant } from '@patternfly/react-table';
-import debounce from '../../Utilities/Debounce';
+import { SortByDirection, Table, TableBody, TableHeader, TableVariant, sortable } from '@patternfly/react-table';
 
 import CheckCircleIcon from '@patternfly/react-icons/dist/js/icons/check-circle-icon';
-import TimesCircleIcon from '@patternfly/react-icons/dist/js/icons/times-circle-icon';
-import PropTypes from 'prop-types';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/components/PrimaryToolbar';
+import PropTypes from 'prop-types';
+import TimesCircleIcon from '@patternfly/react-icons/dist/js/icons/times-circle-icon';
+import debounce from '../../Utilities/Debounce';
+import global_palette_green_500 from '@patternfly/react-tokens/dist/js/global_palette_green_500';
+import global_palette_red_100 from '@patternfly/react-tokens/dist/js/global_palette_red_100';
 
 const ContentTable = ({ data, hits }) => {
     const columns = [
@@ -36,7 +40,8 @@ const ContentTable = ({ data, hits }) => {
 
         return isValidSearchText ? [{
             cells: [{
-                title: <span key={key}> {item.status === 'active' ? <CheckCircleIcon /> : <TimesCircleIcon />}</span>
+                title: <span key={key}> {item.status === 'active' ?
+                    <CheckCircleIcon color={global_palette_green_500.value} /> : <TimesCircleIcon color={global_palette_red_100.value} />}</span>
             }, {
                 title: <Link key={key} to={`${item.rule_id}`}> {item.plugin} </Link>
             }, `${item.error_key}`, `${item.product_code}`, `${item.role}`, `${item.category}`, hits[item.rule_id] || 0]
