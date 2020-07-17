@@ -1,20 +1,22 @@
+/* eslint-disable max-len */
 /* eslint camelcase: 0 */
 import * as ActionTypes from '../AppConstants';
-import { hits } from '../AppConstants';
+
 import Immutable from 'seamless-immutable';
 
 // eslint-disable-next-line new-cap
 const initialState = Immutable({
     content: [],
     contentFetchStatus: '',
-    contentHits: hits,
+    contentHits: {},
     contentHitsFetchStatus: '',
     contentDetails: {},
     contentDetailsFetchStatus: '',
-    contentDetailsHits: {},
+    contentDetailsHits: [],
     contentDetailsHitsFetchStatus: '',
     pyData: [],
-    pyDataFetchStatus: ''
+    pyDataFetchStatus: '',
+    baseUrl: ActionTypes.PRODUCTION_URL
 });
 
 export const getCPStore = () => (state = initialState, action) => {
@@ -68,6 +70,11 @@ export const getCPStore = () => (state = initialState, action) => {
             });
         case `${ActionTypes.PY_DATA_FETCH}_REJECTED`:
             return state.set('pyDataFetchStatus', 'rejected');
+
+        case ActionTypes.URL_SET:
+            return Immutable.merge(state, {
+                baseUrl: action.payload
+            });
 
         default:
             return state;
