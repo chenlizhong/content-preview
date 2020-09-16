@@ -23,6 +23,7 @@ import { Main, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/fronte
 import React, { useEffect, useState } from 'react';
 import { fetchContentDetails, fetchContentDetailsHits } from '../../store/Actions';
 
+import API from '../../Utilities/Api';
 import HostSelector from '../../PresentationalComponents/HostSelector/HostSelector';
 import { InsightsReportCard } from '@redhat-cloud-services/frontend-components-inventory-insights';
 import { Link } from 'react-router-dom';
@@ -47,6 +48,8 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
     const [freeStyleValidated, setFreeStyleValidated] = useState('default');
     const [validFreeStyle, setValidFreeStyle] = useState('');
     const [helperText, setHelperText] = useState('Please enter valid JSON');
+    const [kbaDetailsData, setLbaDetailsData] = useState({});
+    const [kbaLoading, setKbaLoading] = useState(true);
 
     const freeStyleChange = input => {
         let isValid;
@@ -81,11 +84,28 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
 
     const severityLabelColor = severity => severity === 'ERROR' ? 'red' : severity === 'WARN' ? 'orange' : severity === 'INFO' ? 'purple' : 'blue';
 
+    const fetchKbaDetails = async (kbaId) => {
+        try {
+            const kbaDetailsFetch = (await API.get(
+                `https://access.redhat.com/hydra/rest/search/kcs?q=id:(${kbaId
+                })&fl=view_uri,id,publishedTitle&rows=1&redhat_client=$ADVISOR`,
+                {},
+                { credentials: 'include' }
+            )).data.response.docs;
+            console.error(kbaDetailsFetch);
+            setLbaDetailsData(kbaDetailsFetch[0]);
+            setKbaLoading(false);
+        } catch (error) {
+            console.error(error, 'KBA fetch failed.');
+        }
+    };
+
     useEffect(() => {
         const detailName = { name: match.params.recDetail };
         fetchContentDetails(detailName);
         fetchContentDetailsHits(detailName);
-    }, [fetchContentDetails, match.params.recDetail, fetchContentDetailsHits]);
+        fetchKbaDetails(details.node_id);
+    }, [fetchContentDetails, match.params.recDetail, fetchContentDetailsHits, details.node_id]);
 
     return <React.Fragment>
         <PageHeader>
@@ -160,7 +180,10 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                         ...(selectedPyData && { details: selectedPyData }),
                         ...(validFreeStyle && { details: validFreeStyle }),
                         resolution: { resolution: details.resolution }
-                    }} />
+                    }}
+                    kbaDetail={kbaDetailsData}
+                    kbaLoading={kbaLoading}
+                    />
                 </SplitItem>
             </Split>
         </Main>
