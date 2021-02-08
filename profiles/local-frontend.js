@@ -1,5 +1,5 @@
 const SECTION = 'insights';
-const APP_ID = 'content-preview';
+const APP_ID = 'preview';
 const FRONTEND_PORT = 8002;
 const routes = {};
 
