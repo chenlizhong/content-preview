@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { SortByDirection, Table, TableBody, TableHeader, TableVariant, sortable } from '@patternfly/react-table';
 
 import CheckCircleIcon from '@patternfly/react-icons/dist/js/icons/check-circle-icon';
-import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/components/PrimaryToolbar';
+import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
 import PropTypes from 'prop-types';
 import TimesCircleIcon from '@patternfly/react-icons/dist/js/icons/times-circle-icon';
 import debounce from '../../Utilities/Debounce';
