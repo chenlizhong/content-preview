@@ -141,7 +141,7 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
             <HostSelector />
         </PageHeader>
         <div className='pf-l-page__main-section pf-c-page__main-section'>
-            <Split  style={{ width: '100%' }} hasGutter>
+            <Split hasGutter>
                 <SplitItem className='halfSplit'>
                     <Card>
                         <CardBody>
@@ -197,7 +197,7 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                         )}
                     </DataList>
                 </SplitItem>
-                <SplitItem className='halfSplit overFlow'>
+                <SplitItem className='advisor halfSplit overFlow'>
                     <AsyncComponent report={{
                         ...details,
                         ...(selectedPyData && { details: selectedPyData }),

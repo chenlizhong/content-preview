@@ -20,7 +20,7 @@ const HostSelector = ({ baseUrl, setBaseUrl }) => {
         history.push(history.location.pathname);
     };
 
-    return <InputGroup style={{ width: '700px' }}>
+    return <InputGroup>
         <Button id="select-production" variant="control" onClick={() => setUrl(PRODUCTION_URL)}>Production</Button>
         <Button id="select-localhost" variant="control" onClick={() => setUrl(LOCALHOST)}>Localhost</Button>
         <TextInput id="custom-input" type='url' aria-label="custom input field" value={input} onChange={(input) => setInput(input)} />
