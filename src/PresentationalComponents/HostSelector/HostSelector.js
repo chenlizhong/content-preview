@@ -2,7 +2,7 @@ import './_HostSelector.scss';
 
 import { Button, InputGroup, TextInput } from '@patternfly/react-core';
 import { LOCALHOST, PRODUCTION_URL, setBaseUrlConstant } from '../../AppConstants';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,14 +20,12 @@ const HostSelector = ({ baseUrl, setBaseUrl }) => {
         history.push(history.location.pathname);
     };
 
-    return <Fragment>
-        <InputGroup>
-            <Button id="select-production" variant="control" onClick={() => setUrl(PRODUCTION_URL)}>Production</Button>
-            <Button id="select-localhost" variant="control" onClick={() => setUrl(LOCALHOST)}>Localhost</Button>
-            <TextInput id="custom-input" type='url' aria-label="custom input field" value={input} onChange={(input) => setInput(input)} />
-            <Button variant="primary" onClick={() => setUrl(input)}>Submit</Button>
-        </InputGroup>
-    </Fragment>;
+    return <InputGroup style={{ width: '700px' }}>
+        <Button id="select-production" variant="control" onClick={() => setUrl(PRODUCTION_URL)}>Production</Button>
+        <Button id="select-localhost" variant="control" onClick={() => setUrl(LOCALHOST)}>Localhost</Button>
+        <TextInput id="custom-input" type='url' aria-label="custom input field" value={input} onChange={(input) => setInput(input)} />
+        <Button variant="primary" onClick={() => setUrl(input)}>Submit</Button>
+    </InputGroup>;
 };
 
 HostSelector.propTypes = {

@@ -1,53 +1,23 @@
 {
   "name": "preview",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": false,
   "scripts": {
-    "build": "webpack --config config/prod.webpack.config.js",
-    "build:prod": "NODE_ENV=production webpack --config config/prod.webpack.config.js",
-    "deploy": "npm-run-all build:prod lint test",
     "lint": "npm-run-all lint:*",
     "lint:js": "eslint config src",
     "lint:js:fix": "eslint config src --fix",
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
-    "nightly": "npm run deploy",
-    "prod": "NODE_ENV=production webpack serve --config config/dev.webpack.config.js",
-    "server:ctr": "node src/server/generateServerKey.js",
-    "start": "NODE_ENV=development webpack serve --config config/dev.webpack.config.js",
-    "start:beta": "NODE_ENV=development BETA=true webpack serve --config config/dev.webpack.config.js",
-    "start:proxy": "NODE_ENV=development API_ENDOINT=https://cloud.redhat.com webpack serve --config config/dev.webpack.config.js",
-    "test": "jest --verbose",
-    "verify": "npm-run-all build lint test"
+    "start": "webpack serve --hot --open"
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/**/stories/*"
-    ],
-    "coverageDirectory": "./coverage/",
-    "moduleNameMapper": {
-      "\\.(css|scss)$": "identity-obj-proxy"
-    },
-    "roots": [
-      "<rootDir>/src/"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/setupTests.js"
-    ]
-  },
-  "transformIgnorePatterns": [
-    "/node_modules/(?!@redhat-cloud-services)"
-  ],
   "dependencies": {
     "@babel/runtime": "7.14.0",
-    "@patternfly/patternfly": "4.102.2",
-    "@patternfly/react-core": "4.115.2",
-    "@patternfly/react-icons": "4.10.2",
-    "@patternfly/react-table": "4.26.7",
-    "@redhat-cloud-services/frontend-components": "3.1.12",
-    "@redhat-cloud-services/frontend-components-inventory-insights": "3.1.3",
-    "@redhat-cloud-services/frontend-components-utilities": "3.1.2",
+    "@patternfly/patternfly": "4.103.6",
+    "@patternfly/react-core": "4.121.1",
+    "@patternfly/react-icons": "4.10.7",
+    "@patternfly/react-table": "4.27.7",
+    "@redhat-cloud-services/frontend-components": "3.2.2",
+    "@redhat-cloud-services/frontend-components-inventory-insights": "3.2.1",
+    "@redhat-cloud-services/frontend-components-utilities": "3.2.2",
     "axios": "0.21.1",
     "classnames": "2.3.1",
     "react": "17.0.2",
@@ -60,42 +30,36 @@
     "seamless-immutable": "7.1.4"
   },
   "devDependencies": {
-    "@babel/core": "7.14.2",
-    "@babel/plugin-proposal-object-rest-spread": "7.14.2",
+    "@babel/core": "7.14.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.14.4",
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
-    "@babel/plugin-transform-runtime": "7.14.2",
-    "@babel/preset-env": "7.14.2",
+    "@babel/plugin-transform-runtime": "7.14.3",
+    "@babel/preset-env": "7.14.4",
     "@babel/preset-flow": "7.13.13",
     "@babel/preset-react": "7.13.13",
-    "@redhat-cloud-services/frontend-components-config": "4.0.28",
+    "@redhat-cloud-services/frontend-components-config": "4.1.9",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
-    "babel-jest": "26.6.3",
+    "babel-loader": "8.2.2",
     "babel-plugin-dual-import": "1.2.1",
     "cross-fetch": "3.1.4",
-    "css-loader": "5.2.4",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.6",
-    "enzyme-to-json": "3.6.2",
-    "eslint": "7.26.0",
+    "css-loader": "5.2.6",
+    "eslint": "7.27.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-loader": "4.0.2",
-    "eslint-plugin-react": "7.23.2",
+    "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "4.2.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "26.6.3",
-    "node-sass": "5.0.0",
-    "npm-run-all": "4.1.5",
-    "postcss": "8.2.15",
+    "node-sass": "6.0.0",
+    "postcss": "8.3.0",
     "prop-types": "15.7.2",
+    "sass-loader": "11.1.0",
+    "style-loader": "2.0.0",
     "stylelint": "13.13.1",
     "stylelint-config-recommended-scss": "4.2.0",
     "stylelint-scss": "3.19.0",
-    "webpack": "5.37.0",
-    "webpack-bundle-analyzer": "4.4.1",
+    "webpack": "5.38.1",
+    "webpack-bundle-analyzer": "4.4.2",
     "webpack-cli": "4.7.0"
-  },
-  "insights": {
-    "appname": "preview"
   }
 }

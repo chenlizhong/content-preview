@@ -19,13 +19,13 @@ import {
     SplitItem,
     TextArea
 } from '@patternfly/react-core';
-import { Main, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import React, { useEffect, useState } from 'react';
 import { fetchContentDetails, fetchContentDetailsHits } from '../../store/Actions';
+import { loadComponent, useDynamicScript } from '../../Utilities/Helpers';
 
 import API from '../../Utilities/Api';
 import HostSelector from '../../PresentationalComponents/HostSelector/HostSelector';
-import { InsightsReportCard } from '@redhat-cloud-services/frontend-components-inventory-insights';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -92,12 +92,35 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                 {},
                 { credentials: 'include' }
             )).data.response.docs;
-            console.error(kbaDetailsFetch);
             setLbaDetailsData(kbaDetailsFetch[0]);
             setKbaLoading(false);
         } catch (error) {
             console.error(error, 'KBA fetch failed.');
         }
+    };
+
+    const url = '/apps/advisor/fed-mods.json';
+
+    // eslint-disable-next-line react/prop-types
+    const AsyncComponent = ({ report, kbaDetail, kbaLoading }) => {
+        const { ready, failed } = useDynamicScript({
+            url
+        });
+        if (!ready) {
+            return <h2>Loading dynamic script: {url}</h2>;
+        }
+
+        if (failed) {
+            return <h2>Failed to load dynamic script: {url}</h2>;
+        }
+
+        const Component = React.lazy(loadComponent('advisor', './AdvisorReportDetails'));
+
+        return (
+            <React.Suspense fallback="Loading">
+                <Component report={report} kbaDetail={kbaDetail} kbaLoading={kbaLoading}/>
+            </React.Suspense>
+        );
     };
 
     useEffect(() => {
@@ -107,7 +130,7 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
         fetchKbaDetails(details.node_id);
     }, [fetchContentDetails, match.params.recDetail, fetchContentDetailsHits, details.node_id]);
 
-    return <React.Fragment>
+    return <div>
         <PageHeader>
             <Breadcrumb>
                 <BreadcrumbItem><Link to='./'>Content Preview</Link></BreadcrumbItem>
@@ -117,8 +140,8 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
             {details.status !== undefined && <Label color={details.status === 'active' ? 'green' : 'red'}>{capitalize(details.status)}</Label>}
             <HostSelector />
         </PageHeader>
-        <Main>
-            <Split hasGutter>
+        <div className='pf-l-page__main-section pf-c-page__main-section'>
+            <Split  style={{ width: '100%' }} hasGutter>
                 <SplitItem className='halfSplit'>
                     <Card>
                         <CardBody>
@@ -175,19 +198,18 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                     </DataList>
                 </SplitItem>
                 <SplitItem className='halfSplit overFlow'>
-                    <InsightsReportCard report={{
+                    <AsyncComponent report={{
                         ...details,
                         ...(selectedPyData && { details: selectedPyData }),
                         ...(validFreeStyle && { details: validFreeStyle }),
                         resolution: { resolution: details.resolution }
                     }}
                     kbaDetail={kbaDetailsData}
-                    kbaLoading={kbaLoading}
-                    />
+                    kbaLoading={kbaLoading} />
                 </SplitItem>
             </Split>
-        </Main>
-    </React.Fragment >;
+        </div>
+    </div>;
 };
 
 Details.displayName = 'view-rec-details';

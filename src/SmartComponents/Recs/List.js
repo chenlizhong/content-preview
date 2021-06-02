@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import './_List.scss';
 
-import { Main, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import React, { Suspense, lazy, useEffect } from 'react';
 import { fetchContent, fetchContentHits } from '../../store/Actions';
 
@@ -15,7 +15,8 @@ import { withRouter } from 'react-router-dom';
 const CotentTable = lazy(() => import('../../PresentationalComponents/ContentTable/ContentTable'));
 
 const List = ({ content, fetchContent, contentFetchStatus, contentHits, fetchContentHits, contentHitsFetchStatus }) => {
-    const rejected = (fetchingWhat) => `There was an issue fetching ${fetchingWhat}, likely you're using chrome and the network tab will show '(failed)net::ERR_CERT_INVALID' 🦹‍♀️🤯😬`;
+    const rejected = (fetchingWhat) => `There was an issue fetching ${fetchingWhat}, likely you're using chrome and the network tab will show '(failed)net::ERR_CERT_INVALID'
+    to solve this error visit the production url and add the security exception`;
     useEffect(() => {
         fetchContentHits();
         fetchContent();
@@ -25,14 +26,14 @@ const List = ({ content, fetchContent, contentFetchStatus, contentHits, fetchCon
             <PageHeaderTitle title='Content Preview App' />
             <HostSelector />
         </PageHeader>
-        <Main>
+        <div className='pf-l-page__main-section pf-c-page__main-section'>
             <Suspense fallback={<Loading />}>
                 {contentFetchStatus === 'pending' && <Loading />}
                 {contentFetchStatus === 'fulfilled' && <CotentTable data={content} hits={contentHits} />}
                 {contentFetchStatus === 'rejected' && <Alert variant="danger" isInline title={rejected('contents')} />}
                 {contentHitsFetchStatus === 'rejected' && <Alert variant="danger" isInline title={rejected('hits')} />}
             </Suspense>
-        </Main>
+        </div>
     </React.Fragment>;
 };
 

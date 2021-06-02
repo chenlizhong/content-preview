@@ -1,18 +1,12 @@
 import './App.scss';
 
-import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Routes } from './Routes';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-class App extends Component {
-    componentDidMount() { insights.chrome.init(); }
-    render() {
-        return (<Routes childProps={this.props} />);
-    }
-}
+const App = () => <Routes />;
 
 App.propTypes = { history: PropTypes.object };
 
