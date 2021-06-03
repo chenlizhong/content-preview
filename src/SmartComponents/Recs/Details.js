@@ -142,7 +142,7 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
         </PageHeader>
         <div className='pf-l-page__main-section pf-c-page__main-section'>
             <Split hasGutter>
-                <SplitItem className='halfSplit'>
+                <SplitItem>
                     <Card>
                         <CardBody>
                             <ExpandableSection toggleText={details.name} onToggle={() => setExpanded(!expanded)} isExpanded={expanded}>
@@ -197,7 +197,7 @@ const Details = ({ match, fetchContentDetails, details, fetchContentDetailsHits,
                         )}
                     </DataList>
                 </SplitItem>
-                <SplitItem className='advisor halfSplit overFlow'>
+                <SplitItem className='advisor overFlow'>
                     <AsyncComponent report={{
                         ...details,
                         ...(selectedPyData && { details: selectedPyData }),
