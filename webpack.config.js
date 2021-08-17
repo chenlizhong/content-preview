@@ -6,7 +6,7 @@ const deps = require('./package.json').dependencies;
 const betaEnv = 'prod';
 
 const rootFolder = path.resolve(__dirname);
-const target = `https://cloud.redhat.com`;
+const target = `https://console.redhat.com`;
 
 module.exports = {
     mode: 'development',
